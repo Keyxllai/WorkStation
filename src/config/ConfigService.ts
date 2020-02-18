@@ -1,6 +1,7 @@
 import { WorkStationService } from "./../service/WorkStationService";
 import * as path from 'path';
 import * as fs from 'fs';
+import { WorkStation } from "./../workstation/WorkStation";
 
 export class Setting{
     id:string;
@@ -17,6 +18,7 @@ export class Setting{
 export class ConfigService extends WorkStationService{
     settings:{[key:string]:Setting};
     settingFilePath = "";
+    workstation!: WorkStation;
 
     constructor(){
         super();
@@ -64,6 +66,7 @@ export class ConfigService extends WorkStationService{
 
     start(){
         console.log(this.settings);
+       console.log('WKKKK:'+  this.workstation.serviceManager.services['configService']);
     }
     
 }

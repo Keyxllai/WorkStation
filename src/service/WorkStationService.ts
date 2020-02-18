@@ -1,7 +1,9 @@
 import { IService } from "./../base/IService";
+import { WorkStation } from "./../workstation/WorkStation";
 
 export class WorkStationService implements IService{
     configed: boolean;
+    workstation!: WorkStation;
     constructor() {
         this.configed = false;
     }

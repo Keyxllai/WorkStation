@@ -16,8 +16,10 @@ export class WorkStation {
     }
 
     init(cb?: any) {
-        this.serviceManager = new WorkStationServiceManager();
-        this.serviceManager.InitDefaultService();
+        this.serviceManager = new WorkStationServiceManager(this);
+        this.serviceManager.registerServices();
+
+        this.serviceManager.injectWorkStation();
     }
 
     start() {
