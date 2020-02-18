@@ -1,4 +1,6 @@
-export class WorkStationService {
+import { IService } from "./../base/IService";
+
+export class WorkStationService implements IService{
     configed: boolean;
     constructor() {
         this.configed = false;
@@ -6,12 +8,12 @@ export class WorkStationService {
 
     config() {
         if (!this.configed) {
-            this.beforeCofig();
+            this.beforeConfig();
         }
         this.configed = true;
     }
 
-    beforeCofig() {
+    beforeConfig() {
 
     }
 

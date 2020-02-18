@@ -1,6 +1,9 @@
 import { ServiceManager } from "./../Base/ServiceManager";
+import { ConfigService } from "./../config/ConfigService";
 
 export class WorkStationServiceManager extends ServiceManager{
+    configService!: ConfigService;
+
     constructor(){
         super();
     }
@@ -9,6 +12,8 @@ export class WorkStationServiceManager extends ServiceManager{
      * InitDefaultService
      */
     public InitDefaultService() {
-        
+        this.configService = new ConfigService();
+
+        this.services['configService'] = this.configService;
     }
 }
