@@ -2,12 +2,14 @@ import { ServiceManager } from "./../Base/ServiceManager";
 import { ConfigService } from "./../config/ConfigService";
 import { WorkStation } from "./../workstation/WorkStation"
 import { HttpServer } from "./../http/HttpServer";
+import { FileService } from "./../file/FIleService";
 
 export class WorkStationServiceManager extends ServiceManager {
 
     workStation!: WorkStation;
     configService!: ConfigService;
     httpService!: HttpServer;
+    fileService!: FileService;
 
     constructor(workstation: WorkStation) {
         super();
@@ -22,6 +24,8 @@ export class WorkStationServiceManager extends ServiceManager {
         this.services['configService'] = this.configService;
         this.httpService = new HttpServer({});
         this.services['httpService'] = this.httpService;
+        this.fileService = new FileService();
+        this.services['fileService'] = this.fileService;
     }
 
 

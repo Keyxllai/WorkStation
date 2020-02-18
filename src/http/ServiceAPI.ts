@@ -22,7 +22,7 @@ export class ServiceAPI extends BaseRouter {
                     if (!service) {
                         continue;
                     }
-                    var handler: IHttpHandler = service;
+                    var handler = service as IHttpHandler;
                     if (handler.canHandleHttp && handler.canHandleHttp(req.body.url)) {
                         flag = true;
                         handler.handleHttp(req.body.url, req, res);
