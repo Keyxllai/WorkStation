@@ -1,0 +1,22 @@
+{
+  "name": "workstation",
+  "version": "1.0.0",
+  "description": "Workstation for Lai",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Keyxllai/WorkStation.git"
+  },
+  "keywords": [
+    "TS"
+  ],
+  "author": "Lai",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Keyxllai/WorkStation/issues"
+  },
+  "homepage": "https://github.com/Keyxllai/WorkStation#readme"
+}
