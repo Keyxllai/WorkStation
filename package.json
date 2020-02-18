@@ -4,7 +4,7 @@
   "description": "Workstation for Lai",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node dist/NodeStart"
   },
   "repository": {
     "type": "git",

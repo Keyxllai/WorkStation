@@ -1,4 +1,4 @@
-import { ServiceManager } from "src/Base/ServiceManager";
+import { ServiceManager } from "./../Base/ServiceManager";
 
 export class WorkStationServiceManager extends ServiceManager{
     constructor(){
