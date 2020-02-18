@@ -24,10 +24,10 @@ export class ConfigService extends WorkStationService{
     }
 
     beforeConfig(){
-        this.getSettings();
+        this.readSettings();
     }
 
-    getSettings(){
+    private readSettings(){
         try {
             var rootdir = path.join(__dirname,'./../configuration');
             console.log('Setting Path: ' + rootdir);
@@ -48,6 +48,22 @@ export class ConfigService extends WorkStationService{
         } catch (error) {
             
         }
+    }
+
+    /**
+     * getSetting
+     */
+    public getSetting(key:string, defaultSetting: Setting) {
+        if(this.settings[key]){
+            return this.settings[key];
+        }
+        this.settings[key] = defaultSetting;
+        defaultSetting.id = key;
+        return defaultSetting;
+    }
+
+    start(){
+        console.log(this.settings);
     }
     
 }
