@@ -8,6 +8,7 @@ import http from 'http';
 import { BaseRouter } from "./BaseRouter";
 import { ServiceAPI } from "./ServiceAPI";
 import { ConfigAPI } from "./../config/ConfigAPI";
+import { StaticSource } from "./StaticSource";
 
 export class HttpServer extends WorkStationService {
 
@@ -41,10 +42,14 @@ export class HttpServer extends WorkStationService {
 
         // TODO
         var serviceRouter = new ServiceAPI();
-        this.routers['serviceApi'] = serviceRouter;
+        this.routers['serviceApiRouter'] = serviceRouter;
 
         var configApiRouter = new ConfigAPI();
         this.routers['configApiRouter'] = configApiRouter;
+
+        // TODO need dynamic create static folder base on configurations.
+        var httpFolderRouter = new StaticSource('/http','./');
+        this.routers['httpFolderRouter'] = httpFolderRouter;
         
     }
 
