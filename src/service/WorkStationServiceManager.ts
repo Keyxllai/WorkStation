@@ -1,11 +1,13 @@
 import { ServiceManager } from "./../Base/ServiceManager";
 import { ConfigService } from "./../config/ConfigService";
 import { WorkStation } from "./../workstation/WorkStation"
+import { HttpServer } from "./../http/HttpServer";
 
 export class WorkStationServiceManager extends ServiceManager {
 
     workStation!: WorkStation;
     configService!: ConfigService;
+    httpService!: HttpServer;
 
     constructor(workstation: WorkStation) {
         super();
@@ -18,6 +20,8 @@ export class WorkStationServiceManager extends ServiceManager {
     public registerServices() {
         this.configService = new ConfigService();
         this.services['configService'] = this.configService;
+        this.httpService = new HttpServer({});
+        this.services['httpService'] = this.httpService;
     }
 
 
