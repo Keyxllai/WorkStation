@@ -18,5 +18,12 @@
   "bugs": {
     "url": "https://github.com/Keyxllai/WorkStation/issues"
   },
-  "homepage": "https://github.com/Keyxllai/WorkStation#readme"
+  "homepage": "https://github.com/Keyxllai/WorkStation#readme",
+  "devDependencies": {
+    "del": "^5.1.0",
+    "gulp": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "typescript": "^3.7.5"
+  }
 }
