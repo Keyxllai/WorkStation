@@ -38,12 +38,14 @@ var copyFiles = function () {
             .pipe(gulp.dest('dist'));
     }
 
-    var rest = gulp.src('./src/configuration/*',{base:"src"})
+    var rest = gulp.src('./src/configuration/*', {
+            base: "src"
+        })
         .pipe(gulp.dest('dist'));
     return rest;
 }
 
- gulp.task('CopyFiles', copyFiles);
+gulp.task('CopyFiles', copyFiles);
 
 var watchFiles = function () {
     var input = 'src/'
@@ -59,4 +61,4 @@ gulp.task('WatchFiles', watchFiles);
 gulp.task('Build', gulp.series('compileTS', 'CopyFiles'));
 gulp.task('Watch', gulp.parallel('watchTS', 'WatchFiles'));
 
-gulp.task('default', gulp.series('clean','Build','Watch'));
+gulp.task('default', gulp.series('clean', 'Build', 'Watch'));
