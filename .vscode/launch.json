@@ -11,7 +11,7 @@
             "program": "${workspaceFolder}/dist/NodeStart.js",
             "sourceMaps": true,
             "sourceMapPathOverrides": {
-                "/source/*": "${workspaceFolder}/src/*"
+                "*": "${workspaceFolder}/src/*"
             }
         }
     ]
