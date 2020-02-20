@@ -6,7 +6,7 @@ var sourcemaps = require('gulp-sourcemaps');
 
 gulp.task('clean', gulp.series(function () {
     var out = 'dist';
-    return del([out + '*/*']);
+    return del([out + '/*']);
 }))
 
 var compileTS = function () {
@@ -33,14 +33,17 @@ var copyFiles = function () {
     var file_exts = ['html', 'js', 'css', 'jpg', 'png', 'svg', 'eot', 'json'];
     var res = null;
     for (var i = 0; i < file_exts.length; i++) {
-        input = input + '/*.' + file_exts[i];
+        input = input + '/*/*.' + file_exts[i];
         res = gulp.src(input)
             .pipe(gulp.dest('dist'));
     }
-    return res;
+
+    var rest = gulp.src('./src/configuration/*',{base:"src"})
+        .pipe(gulp.dest('dist'));
+    return rest;
 }
 
-gulp.task('CopyFiles', copyFiles);
+ gulp.task('CopyFiles', copyFiles);
 
 var watchFiles = function () {
     var input = 'src/'
@@ -53,7 +56,7 @@ var watchFiles = function () {
 }
 gulp.task('WatchFiles', watchFiles);
 
-gulp.task('Build', gulp.series('compileTS','CopyFiles'));
-gulp.task('Watch', gulp.parallel('watchTS','WatchFiles'));
+gulp.task('Build', gulp.series('compileTS', 'CopyFiles'));
+gulp.task('Watch', gulp.parallel('watchTS', 'WatchFiles'));
 
-gulp.task('default', gulp.series('Build','Watch'));
+gulp.task('default', gulp.series('clean','Build','Watch'));
