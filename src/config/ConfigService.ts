@@ -21,7 +21,6 @@ export class ConfigService extends WorkStationService {
     private readConfigs() {
         try {
             var rootdir = path.join(__dirname, './../configuration');
-            console.log('Setting Path: ' + rootdir);
             if (!fs.existsSync(rootdir)) {
                 fs.mkdirSync(rootdir);
             }
@@ -30,11 +29,10 @@ export class ConfigService extends WorkStationService {
             if (fs.existsSync(this.configFilePath)) {
                 let json = fs.readFileSync(this.configFilePath).toString();
                 this.configs = JSON.parse(json);
-                console.log('Success load config.json:' + this.configFilePath)
+                console.log('Success load config.json from [' + this.configFilePath + ']');
             }
             else {
                 this.configs = {};
-                console.log('No config.json:' + this.configFilePath)
             }
         } catch (error) {
 
@@ -54,8 +52,7 @@ export class ConfigService extends WorkStationService {
     }
 
     start() {
-        console.log(this.configs);
-        console.log('WKKKK:' + this.workStation.serviceManager.services['configService']);
+        
     }
 
 }

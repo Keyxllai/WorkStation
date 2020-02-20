@@ -38,7 +38,6 @@ export class FileService extends WorkStationService implements IHttpHandler {
         let configService = this.workStation.serviceManager.configService;
 
         this.fileSystemConfig = configService.getConfig("FileSystemConfig", FileSystemConfig.defaultFileSystemConfig());
-        console.log("CCCOOONNN:   " + this.fileSystemConfig);
     }
 
 
@@ -50,7 +49,6 @@ export class FileService extends WorkStationService implements IHttpHandler {
     }
 
     getWorkSpace(req: any, res: any) {
-        //console.log("CCCOOONNN:   " + this.fileSystemConfig);
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(this.fileSystemConfig.drivers));
         

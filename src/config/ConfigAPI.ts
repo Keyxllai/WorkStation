@@ -15,14 +15,14 @@ export class ConfigAPI extends BaseRouter {
             var data: any = []
             try {
                 if (ws.serviceManager.configService) {
-                    data = ws.serviceManager.configService.getConfig('MySqlConfig', new Config());
+                    data = ws.serviceManager.configService.configs;
                 }
             } catch (error) {
 
             }
             if (!data)
                 data = [];
-            res.send({ 'Configs': data });
+            res.send(data);
         });
     }
 }
