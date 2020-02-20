@@ -1,18 +1,40 @@
 {
-    "MySqlConfig":{
+    "FileSystemConfig": {
+        "id": "FileSystemConfig",
+        "name": "FileSystem",
+        "drivers": [
+            {
+                "id": "localDriverId",
+                "name": "LocalDriver",
+                "type": "local",
+                "workspaces": [
+                    {
+                        "id": "github-repository",
+                        "name": "github-repository",
+                        "author": "keyxllai",
+                        "path": "D:\\trgit\\WorkStation"
+                    }
+                ]
+            }
+        ]
+    },
+    "MySqlConfig": {
         "id": "MySqlConfig",
-		"name": "MySql",
-        "label": "",
-        "configs":[{
-            "name": "cloud",
-            "type": "mysql",
-            "host": "127.0.0.1",
-            "port": 3306,
-            "username": "test",
-            "password": "123456",
-            "database": "test",
-            "synchronize": false,
-            "entities": ["F:\\tss\\Projects\\entity\\*.js"]
-        }]
+        "name": "MySql",
+        "configs": [
+            {
+                "name": "cloud",
+                "type": "mysql",
+                "host": "127.0.0.1",
+                "port": 3306,
+                "username": "test",
+                "password": "123456",
+                "database": "test",
+                "synchronize": false,
+                "entities": [
+                    "F:\\tss\\Projects\\entity\\*.js"
+                ]
+            }
+        ]
     }
 }

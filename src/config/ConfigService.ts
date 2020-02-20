@@ -2,50 +2,39 @@ import { WorkStationService } from "./../service/WorkStationService";
 import * as path from 'path';
 import * as fs from 'fs';
 import { WorkStation } from "./../workstation/WorkStation";
-
-export class Setting {
-    id: string;
-    name: string;
-    label: string;
-    items: any;
-    constructor() {
-        this.id = '';
-        this.name = '';
-        this.label = '';
-    }
-}
+import { Config } from "./../base/Config";
 
 export class ConfigService extends WorkStationService {
-    settings: { [key: string]: Setting };
-    settingFilePath = "";
+    configs: { [key: string]: Config };
+    configFilePath = "";
     workstation!: WorkStation;
 
     constructor() {
         super();
-        this.settings = {};
+        this.configs = {};
     }
 
     beforeConfig() {
-        this.readSettings();
+        this.readConfigs();
     }
 
-    private readSettings() {
+    private readConfigs() {
         try {
             var rootdir = path.join(__dirname, './../configuration');
             console.log('Setting Path: ' + rootdir);
             if (!fs.existsSync(rootdir)) {
                 fs.mkdirSync(rootdir);
             }
-            this.settingFilePath = path.join(rootdir, 'config.json');
+            this.configFilePath = path.join(rootdir, 'config.json');
 
-            if (fs.existsSync(this.settingFilePath)) {
-                let json = fs.readFileSync(this.settingFilePath).toString();
-                this.settings = JSON.parse(json);
-                console.log('Success load config.json:' + this.settingFilePath)
+            if (fs.existsSync(this.configFilePath)) {
+                let json = fs.readFileSync(this.configFilePath).toString();
+                this.configs = JSON.parse(json);
+                console.log('Success load config.json:' + this.configFilePath)
             }
             else {
-                this.settings = {};
-                console.log('No config.json:' + this.settingFilePath)
+                this.configs = {};
+                console.log('No config.json:' + this.configFilePath)
             }
         } catch (error) {
 
@@ -53,19 +42,19 @@ export class ConfigService extends WorkStationService {
     }
 
     /**
-     * getSetting
+     * getConfigConfig
      */
-    public getSetting(key: string, defaultSetting: Setting) {
-        if (this.settings[key]) {
-            return this.settings[key];
+    public getConfig(key: string, defaultConfig: Config) {
+        if (this.configs[key]) {
+            return this.configs[key];
         }
-        this.settings[key] = defaultSetting;
-        defaultSetting.id = key;
-        return defaultSetting;
+        this.configs[key] = defaultConfig;
+        defaultConfig.id = key;
+        return defaultConfig;
     }
 
     start() {
-        console.log(this.settings);
+        console.log(this.configs);
         console.log('WKKKK:' + this.workStation.serviceManager.services['configService']);
     }
 

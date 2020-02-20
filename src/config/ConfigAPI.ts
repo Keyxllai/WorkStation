@@ -1,5 +1,5 @@
 import { BaseRouter } from "./../http/BaseRouter";
-import { Setting } from "./ConfigService";
+import { Config } from "./../base/Config";
 
 export class ConfigAPI extends BaseRouter {
     constructor() {
@@ -15,7 +15,7 @@ export class ConfigAPI extends BaseRouter {
             var data: any = []
             try {
                 if (ws.serviceManager.configService) {
-                    data = ws.serviceManager.configService.getSetting('MySqlConfig', new Setting());
+                    data = ws.serviceManager.configService.getConfig('MySqlConfig', new Config());
                 }
             } catch (error) {
 
