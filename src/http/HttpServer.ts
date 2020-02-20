@@ -57,10 +57,21 @@ export class HttpServer extends WorkStationService {
         this.configRouters();
         let app = this.app;
         let port = 8083;  //TODO
+        app.set('port', port)
         this.server = app.listen(port, function(){
             console.log("Express server listening on port " + app.get('port'));
         });
 
+    }
+
+    restart(){
+        let app = this.app;
+        let port = 8083;  //TODO
+        this.server.close();
+        app.set('port', port)
+        this.server = app.listen(port, function(){
+            console.log("Express server listening on port " + app.get('port'));
+        });
     }
 
     private configRouters(){
