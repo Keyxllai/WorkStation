@@ -1,6 +1,7 @@
 import { WorkStationService } from "./../service/WorkStationService";
 import { IHttpHandler } from "./../http/BaseRouter";
 import { FileSystemConfig } from "./../base/Config";
+import { ServiceContext } from "./../base/ServiceContext.";
 
 export class FileService extends WorkStationService implements IHttpHandler {
 
@@ -24,12 +25,13 @@ export class FileService extends WorkStationService implements IHttpHandler {
     }
 
     handleHttp(url: string, req: any, res: any): void {
+        let ctx = new ServiceContext(url, req, res);
         switch (url) {
             case "file/getFolders":
-                this.getFolders(req, res);
+                this.getFolders(ctx);
                 break;
             case "file/getWorkSpaces":
-                this.getWorkSpace(req, res);
+                this.getWorkSpace(ctx);
                 break;
         }
     }
@@ -42,16 +44,15 @@ export class FileService extends WorkStationService implements IHttpHandler {
 
 
 
-    getFolders(req: any, res: any) {
+    getFolders(ctx: ServiceContext) {
         console.log('GetFolders');
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end("FileAPI is working");
+        ctx.response.writeHead(200, { 'Content-Type': 'application/json' });
+        ctx.response.end("FileAPI is working");
     }
 
-    getWorkSpace(req: any, res: any) {
-        res.writeHead(200, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify(this.fileSystemConfig.drivers));
-        
+    getWorkSpace(ctx: ServiceContext) {
+        ctx.response.writeHead(200, { 'Content-Type': 'application/json' });
+        ctx.response.end(JSON.stringify(this.fileSystemConfig.drivers));
     }
 
 
