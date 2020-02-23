@@ -9,6 +9,8 @@ export class Drive {
 export class WorkSpace {
     id!: string;
     name!: string;
+    driveId?:string;
+    driveName?:string;
     author?: string;
     path!: string;
     folders?: WorkSpaceFolder[];
