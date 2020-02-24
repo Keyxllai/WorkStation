@@ -29,4 +29,12 @@ export class WorkSpaceFolder {
 export class WorkSpaceFile {
     id!: string;
     name!: string;
+    realPath!: string;
+    virtualPath!: string;
+    createTime!: Date;
+    isDirectory!: boolean;
+    size!: number;
+    extname!: string;
+    workspace!: string;
+    driver!: string;
 }
