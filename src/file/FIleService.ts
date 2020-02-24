@@ -2,7 +2,9 @@ import { WorkStationService } from "./../service/WorkStationService";
 import { IHttpHandler } from "./../http/BaseRouter";
 import { FileSystemConfig } from "./../base/Config";
 import { ServiceContext } from "./../base/ServiceContext.";
-import { WorkSpace } from "./../base/Models";
+import { WorkSpace, WorkSpaceFolder } from "./../base/Models";
+import * as fs from "fs";
+import * as path from "path";
 
 export class FileService extends WorkStationService implements IHttpHandler {
 
@@ -57,12 +59,12 @@ export class FileService extends WorkStationService implements IHttpHandler {
             let drivers = this.fileSystemConfig.drivers;
             let workspaces: WorkSpace[] = [];
             if (!drivers) {
-                ctx.Error("No drivers configed");
+                ctx.Warn("No drivers configed");
                 return;
             }
             for (let driver of drivers) {
                 if (driver.type != 'local') {
-                    ctx.Log("Current not support driver Type: " + driver.type);
+                    ctx.Warn("Current not support driver Type: " + driver.type);
                     return;
                 }
                 let workSpaces = driver.workspaces;
@@ -73,9 +75,11 @@ export class FileService extends WorkStationService implements IHttpHandler {
                 for (let ws of workSpaces) {
                     ws.driveId = driver.id;
                     ws.driveName = driver.name;
-                    
+                    let result = this.pickupFolders(ws.path, ctx);
+                    if (result.length > 0) {
+                        ws.folders = result;
+                    }
                     workspaces.push(ws);
-
                 }
             }
             ctx.result.result = workspaces;
@@ -90,8 +94,43 @@ export class FileService extends WorkStationService implements IHttpHandler {
         }
     }
 
-    pickupFolders(filepath: string, ctx: ServiceContext) {
+    pickupFolders(filepath: string, ctx: ServiceContext): WorkSpaceFolder[] {
+        try {
+            let folders: WorkSpaceFolder[] = [];
+            let fds: any = {};
+            if (!fs.existsSync(filepath)) {
+                ctx.Log("File path not exist");
+                return folders;
+            }
 
+            let files = fs.readdirSync(filepath);
+
+            for (let file of files) {
+                if (file[0] == '.' || file == 'node_modules') {
+                    ctx.Warn("This folder [" + file + "] would be ignored.")
+                    continue;
+                }
+                var filedir = path.join(filepath, file);
+                var stats = fs.statSync(filedir);
+                var isDir = stats.isDirectory();
+                if (isDir) {
+                    let f = new WorkSpaceFolder();
+                    f.folderName = file;
+                    f.path = filedir;
+
+                    let subFs = this.pickupFolders(filedir, ctx);
+                    if (subFs.length > 0) {
+                        f.subFolders = subFs;
+                    }
+                    folders.push(f);
+                    fds[file] = {};
+                }
+            }
+            // return fds;
+            return folders;
+        } catch (error) {
+            return [];
+        }
     }
 
 

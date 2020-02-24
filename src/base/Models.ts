@@ -9,18 +9,21 @@ export class Drive {
 export class WorkSpace {
     id!: string;
     name!: string;
-    driveId?:string;
-    driveName?:string;
+    driveId?: string;
+    driveName?: string;
     author?: string;
     path!: string;
     folders?: WorkSpaceFolder[];
     totalSize?: string;
-    usedSize?:string;
+    usedSize?: string;
 }
 
 export class WorkSpaceFolder {
     id!: string;
-    name!: string;
+    folderName!: string;
+    path!: string;
+    virtualPath!: string;
+    subFolders?: WorkSpaceFolder[];
 }
 
 export class WorkSpaceFile {
