@@ -45,7 +45,7 @@ export class FileService extends WorkStationService implements IHttpHandler {
     }
 
     /**
-     * Request body need contain: "url":"file/getFolders"
+     * Request body need contain: "url":"file/getWorkSpaces"
      * Build Folder Tree for all WorkSpace that belong to local drive base on file system configuration, 
      * please specify FileSystemConfig Node in config.json file. 
      * this API just retrieve folder info to improve query performance
