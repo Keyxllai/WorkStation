@@ -18,7 +18,6 @@ export class FileService extends WorkStationService implements IHttpHandler {
     canHandleHttp(url: string): boolean {
         //return true;
         switch (url) {
-            case "file/getFolders":
             case "file/getWorkSpaces":
             case "file/getFiles":
                 return true;
@@ -30,9 +29,6 @@ export class FileService extends WorkStationService implements IHttpHandler {
     handleHttp(url: string, req: any, res: any): void {
         let ctx = new ServiceContext(url, req, res);
         switch (url) {
-            case "file/getFolders":
-                this.getFolders(ctx);
-                break;
             case "file/getWorkSpaces":
                 this.getWorkSpace(ctx);
                 break;
@@ -48,14 +44,16 @@ export class FileService extends WorkStationService implements IHttpHandler {
         this.fileSystemConfig = configService.getConfig("FileSystemConfig", FileSystemConfig.defaultFileSystemConfig());
     }
 
-
-
-    getFolders(ctx: ServiceContext) {
-        console.log('GetFolders');
-        ctx.response.writeHead(200, { 'Content-Type': 'application/json' });
-        ctx.response.end("FileAPI is working");
-    }
-
+    /**
+     * Request body need contain: "url":"file/getFolders"
+     * Build Folder Tree for all WorkSpace that belong to local drive base on file system configuration, 
+     * please specify FileSystemConfig Node in config.json file. 
+     * this API just retrieve folder info to improve query performance
+     *
+     * @param {ServiceContext} ctx
+     * @returns Folder Tree
+     * @memberof FileService
+     */
     getWorkSpace(ctx: ServiceContext) {
         try {
             ctx.Log("Receive Request.");
@@ -87,6 +85,43 @@ export class FileService extends WorkStationService implements IHttpHandler {
             }
             ctx.result.result = workspaces;
             ctx.result.success = true;
+        } catch (error) {
+            ctx.Error('Encount error: ' + error.message)
+            ctx.result.success = false;
+        }
+        finally {
+            ctx.response.writeHead(200, { 'Content-Type': 'application/json' });
+            ctx.response.end(JSON.stringify(ctx.result));
+        }
+    }
+
+    /**
+     * Request body need cotain: "url":"file/getFiles"
+     * get file infomations with speicfic virtual path;
+     * eg. virtualpath: "LocalDriver\\WorkSpaceName\\trgit"
+     * virtual path must specify driver name and workspace name
+     * @param {ServiceContext} ctx
+     * @returns get workspace file infomations
+     * @memberof FileService
+     */
+    getFolderFiles(ctx: ServiceContext) {
+        try {
+            let workspace = this.getWorkSpaceByVirtualPath(ctx.requestBody.virtualpath, ctx);
+            if (!workspace) {
+                ctx.Warn("Not Found relative WorkSpace for path: " + ctx.requestBody.virtualpath)
+                return;
+            }
+            let relativePath = this.getRelativePath(ctx.requestBody.virtualpath);
+            let folderRealPath = path.join(workspace.path, relativePath);
+            let files = this.retrieveFilesWithRealPath(folderRealPath, ctx);
+            files?.forEach(file => {
+                file.workspace = workspace.name;
+                file.driver = workspace.driveName;
+                file.virtualPath = ctx.requestBody.virtualpath;
+            })
+            ctx.result.result = files;
+            ctx.result.success = true;
+
         } catch (error) {
             ctx.Error('Encount error: ' + error.message)
             ctx.result.success = false;
@@ -137,35 +172,6 @@ export class FileService extends WorkStationService implements IHttpHandler {
         }
     }
 
-    // get files with VirtualPath: "LocalDriver\\WorkSpaceName\\trgit"
-    getFolderFiles(ctx: ServiceContext) {
-        try {
-            let workspace = this.getWorkSpaceByVirtualPath(ctx.requestBody.virtualpath, ctx);
-            if (!workspace) {
-                ctx.Warn("Not Found relative WorkSpace for path: " + ctx.requestBody.virtualpath)
-                return;
-            }
-            let relativePath = this.getRelativePath(ctx.requestBody.virtualpath);
-            let folderRealPath = path.join(workspace.path, relativePath);
-            let files = this.retrieveFilesWithRealPath(folderRealPath, ctx);
-            files?.forEach(file => {
-                file.workspace = workspace.name;
-                file.driver = workspace.driveName;
-                file.virtualPath = ctx.requestBody.virtualpath;
-            })
-            ctx.result.result = files;
-            ctx.result.success = true;
-
-        } catch (error) {
-            ctx.Error('Encount error: ' + error.message)
-            ctx.result.success = false;
-        }
-        finally {
-            ctx.response.writeHead(200, { 'Content-Type': 'application/json' });
-            ctx.response.end(JSON.stringify(ctx.result));
-        }
-    }
-
     private getRelativePath(virtualPath: string): string {
         let strs = virtualPath.split('/');
         if (strs.length < 2) {
@@ -212,7 +218,7 @@ export class FileService extends WorkStationService implements IHttpHandler {
                 return;
             }
             let files = fs.readdirSync(filepath);
-            ctx.Debug("Total [" +files.length+"] files be found in path: " + filepath);
+            ctx.Debug("Total [" + files.length + "] files be found in path: " + filepath);
             files.forEach(filename => {
                 if (filename[0] == '.') {
                     ctx.Warn("   >>> [" + filename + "] would be ignored.");
