@@ -75,7 +75,7 @@ export class FileService extends WorkStationService implements IHttpHandler {
                 for (let ws of workSpaces) {
                     ws.driveId = driver.id;
                     ws.driveName = driver.name;
-                    let result = this.pickupFolders(ws.path, ctx);
+                    let result = this.pickupFolders(ws, ws.path, ctx);
                     if (result.length > 0) {
                         ws.folders = result;
                     }
@@ -94,7 +94,7 @@ export class FileService extends WorkStationService implements IHttpHandler {
         }
     }
 
-    pickupFolders(filepath: string, ctx: ServiceContext): WorkSpaceFolder[] {
+    pickupFolders(workspace: WorkSpace, filepath: string, ctx: ServiceContext): WorkSpaceFolder[] {
         try {
             let folders: WorkSpaceFolder[] = [];
             let fds: any = {};
@@ -117,8 +117,9 @@ export class FileService extends WorkStationService implements IHttpHandler {
                     let f = new WorkSpaceFolder();
                     f.folderName = file;
                     f.path = filedir;
+                    f.virtualPath = workspace.driveName + "\\" + workspace.name + "\\" + path.relative(workspace.path, filedir);
 
-                    let subFs = this.pickupFolders(filedir, ctx);
+                    let subFs = this.pickupFolders(workspace, filedir, ctx);
                     if (subFs.length > 0) {
                         f.subFolders = subFs;
                     }
