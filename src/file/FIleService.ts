@@ -36,7 +36,7 @@ export class FileService extends WorkStationService implements IHttpHandler {
                 this.getFolderFiles(ctx);
                 break;
             case "file/deleteFiles":
-                this.getFolderFiles(ctx);
+                //this.getFolderFiles(ctx);
                 break;
         }
     }
