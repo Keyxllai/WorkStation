@@ -38,7 +38,7 @@ export class AddinBuilder {
         let obs: any[] = [];
         extensions.forEach((extension)=>{
            let os = extension.buildMultipleItemObjects();
-           if(os && os.length > 1){
+           if(os && os.length > 0){
                os.forEach(function(ite){
                    if(ite){
                        obs.push(ite);

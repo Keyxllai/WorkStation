@@ -12,7 +12,7 @@ export class WorkStationServiceManager extends ServiceManager {
     workStation!: WorkStation;
     configService!: ConfigService;
     //httpService!: HttpServer;
-    fileService!: FileService;
+    // fileService!: FileService;
     pluginService!: PluginService;
 
 
@@ -25,13 +25,13 @@ export class WorkStationServiceManager extends ServiceManager {
     /**
      * register services
      */
-    public registerServices() {
+    public registerDefaultServices() {
         this.configService = new ConfigService();
         this.services['configService'] = this.configService;
         // this.httpService = new HttpServer({});
         // this.services['httpService'] = this.httpService;
-        this.fileService = new FileService();
-        this.services['fileService'] = this.fileService;
+        // this.fileService = new FileService();
+        // this.services['fileService'] = this.fileService;
         this.pluginService = new PluginService();
         this.services['pluginService'] = this.pluginService;
 
@@ -47,7 +47,9 @@ export class WorkStationServiceManager extends ServiceManager {
         let services = this.addinBuilder.buildObjects(this.serviceKey);
 
         services.forEach(function (service: any) {
-            that.services[service.options.id] = service;
+            if (service.id) {
+                that.services[service.id] = service;
+            }
         });
     }
 

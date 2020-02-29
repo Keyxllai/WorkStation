@@ -18,7 +18,7 @@ export class WorkStation {
 
     init(cb?: any) {
         this.serviceManager = new WorkStationServiceManager(this);
-        this.serviceManager.registerServices();
+        this.serviceManager.registerDefaultServices();
 
         let plugins = this.serviceManager.pluginService.getAddins();
         this.serviceManager.addinBuilder.setupPlugins(plugins);

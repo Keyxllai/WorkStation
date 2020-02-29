@@ -19,7 +19,7 @@ let workstation = {
             ]
         },
         {
-            key:"workstation/services/routers",
+            key: "workstation/services/routers",
             items: [
                 {
                     id: "index",
@@ -32,7 +32,24 @@ let workstation = {
     ]
 }
 
+let fileService = {
+    name: "fileservice",
+    dirname: __dirname,
+    extensions: [
+        {
+            key: "workstation/services",
+            items: [
+                {
+                    id: "file-service",
+                    object: "WS.FileService",
+                }
+            ]
+        }
+    ]
+}
+
 let addins = [];
 addins.push(workstation);
+addins.push(fileService);
 
 module.exports = addins;

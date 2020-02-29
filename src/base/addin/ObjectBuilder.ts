@@ -17,6 +17,7 @@ export class ObjectBuilder {
             }
 
             if (object) {
+                object['id'] = objectOps['id'];
                 return object;
             }
             else {
