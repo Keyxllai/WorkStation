@@ -22,6 +22,7 @@ export class FileService extends WorkStationService implements IHttpHandler {
             case "file/getWorkSpaces":
             case "file/getFiles":
             case "file/deleteFiles":
+            case "file/renameFolder":
                 return true;
             default:
                 return false;
@@ -30,6 +31,7 @@ export class FileService extends WorkStationService implements IHttpHandler {
 
     handleHttp(url: string, req: any, res: any): void {
         let ctx = new ServiceContext(url, req, res);
+        ctx.result.success = false;
         switch (url) {
             case "file/getWorkSpaces":
                 this.getWorkSpace(ctx);
@@ -39,6 +41,9 @@ export class FileService extends WorkStationService implements IHttpHandler {
                 break;
             case "file/deleteFiles":
                 this.deleteFiles(ctx);
+                break;
+            case "file/renameFolder":
+                this.renameFolder(ctx);
                 break;
         }
     }
@@ -126,6 +131,7 @@ export class FileService extends WorkStationService implements IHttpHandler {
             })
             ctx.result.result = files;
             ctx.result.success = true;
+            ctx.Log("Delete Folders Successed!");
 
         } catch (error) {
             ctx.Error('Encount error: ' + error.message)
@@ -137,6 +143,13 @@ export class FileService extends WorkStationService implements IHttpHandler {
         }
     }
 
+    /**
+     * Delate File through file virtual Paths
+     * Request body need cotain: "url":"file/deleteFiles"
+     * and files: ["Local/workspace/dist"]
+     * @param {ServiceContext} ctx
+     * @memberof FileService
+     */
     deleteFiles(ctx: ServiceContext) {
         try {
             ctx.Log("Total [" + ctx.requestBody.files.length + "] need to be deleted.");
@@ -155,6 +168,47 @@ export class FileService extends WorkStationService implements IHttpHandler {
                 ctx.Log("  - End delete file, Successed.")
             }
             ctx.result.success = true;
+
+        } catch (error) {
+            ctx.Error(error.message);
+            ctx.result.success = false;
+        }
+        finally {
+            ctx.response.writeHead(200, { 'Content-Type': 'application/json' });
+            ctx.response.end(JSON.stringify(ctx.result));
+        }
+    }
+
+    /**
+     * Rename Folder through virtual path
+     *
+     * @param {ServiceContext} ctx
+     * @returns
+     * @memberof FileService
+     */
+    renameFolder(ctx: ServiceContext) {
+        try {
+            ctx.Log("Receive rename folder request");
+            let workspace = this.getWorkSpaceByVirtualPath(ctx.requestBody.oldFolderPath, ctx);
+            if(!workspace){
+                ctx.Error("Cannot get relative workspace for folder: " + ctx.requestBody.oldFolderPath);
+                return;
+            }
+
+            let oldPath = this.getRelativePath(ctx.requestBody.oldFolderPath);
+            let newPath = this.getRelativePath(ctx.requestBody.newFolderPath);
+
+            let oldRealPath = path.join(workspace.path, oldPath);
+            if(!fs.existsSync(oldRealPath)){
+                ctx.Error("Folder [ " + ctx.requestBody.oldFolderPath + " ] not exist now, plz double check.");
+                return;
+            }
+            let newRealPath = path.join(workspace.path, newPath);
+
+            fs.renameSync(oldRealPath, newRealPath);
+
+            ctx.result.success = true;
+            ctx.Log("Rename folder Successed!");
 
         } catch (error) {
             ctx.Error(error.message);
