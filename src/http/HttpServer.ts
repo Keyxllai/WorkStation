@@ -37,6 +37,7 @@ export class HttpServer extends WorkStationService {
             extended: true
         }));
         app.use(bodyParser.json());
+        app.use(bodyParser.urlencoded({extended:false}));
         app.use(logger("combined"));
         app.use(cors());
 

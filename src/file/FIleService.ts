@@ -23,6 +23,7 @@ export class FileService extends WorkStationService implements IHttpHandler {
             case "file/getFiles":
             case "file/deleteFiles":
             case "file/renameFolder":
+            case "file/uploadFiles":
                 return true;
             default:
                 return false;
@@ -45,6 +46,10 @@ export class FileService extends WorkStationService implements IHttpHandler {
             case "file/renameFolder":
                 this.renameFolder(ctx);
                 break;
+            case "file/uploadFiles":
+                this.handleUploadFiles(ctx);
+                break;
+
         }
     }
 
@@ -190,7 +195,7 @@ export class FileService extends WorkStationService implements IHttpHandler {
         try {
             ctx.Log("Receive rename folder request");
             let workspace = this.getWorkSpaceByVirtualPath(ctx.requestBody.oldFolderPath, ctx);
-            if(!workspace){
+            if (!workspace) {
                 ctx.Error("Cannot get relative workspace for folder: " + ctx.requestBody.oldFolderPath);
                 return;
             }
@@ -199,7 +204,7 @@ export class FileService extends WorkStationService implements IHttpHandler {
             let newPath = this.getRelativePath(ctx.requestBody.newFolderPath);
 
             let oldRealPath = path.join(workspace.path, oldPath);
-            if(!fs.existsSync(oldRealPath)){
+            if (!fs.existsSync(oldRealPath)) {
                 ctx.Error("Folder [ " + ctx.requestBody.oldFolderPath + " ] not exist now, plz double check.");
                 return;
             }
@@ -209,6 +214,24 @@ export class FileService extends WorkStationService implements IHttpHandler {
 
             ctx.result.success = true;
             ctx.Log("Rename folder Successed!");
+
+        } catch (error) {
+            ctx.Error(error.message);
+            ctx.result.success = false;
+        }
+        finally {
+            ctx.response.writeHead(200, { 'Content-Type': 'application/json' });
+            ctx.response.end(JSON.stringify(ctx.result));
+        }
+    }
+
+    handleUploadFiles(ctx: ServiceContext){
+        try {
+            ctx.Log("Receive upload request");
+            
+
+            ctx.result.success = true;
+            ctx.Log("upload Successed!");
 
         } catch (error) {
             ctx.Error(error.message);
