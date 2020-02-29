@@ -5,6 +5,7 @@ import { ServiceContext } from "./../base/ServiceContext.";
 import { WorkSpace, WorkSpaceFolder, WorkSpaceFile } from "./../base/Models";
 import * as fs from "fs";
 import * as path from "path";
+import trash from "trash";
 
 export class FileService extends WorkStationService implements IHttpHandler {
 
@@ -20,6 +21,7 @@ export class FileService extends WorkStationService implements IHttpHandler {
         switch (url) {
             case "file/getWorkSpaces":
             case "file/getFiles":
+            case "file/deleteFiles":
                 return true;
             default:
                 return false;
@@ -36,7 +38,7 @@ export class FileService extends WorkStationService implements IHttpHandler {
                 this.getFolderFiles(ctx);
                 break;
             case "file/deleteFiles":
-                //this.getFolderFiles(ctx);
+                this.deleteFiles(ctx);
                 break;
         }
     }
@@ -127,6 +129,35 @@ export class FileService extends WorkStationService implements IHttpHandler {
 
         } catch (error) {
             ctx.Error('Encount error: ' + error.message)
+            ctx.result.success = false;
+        }
+        finally {
+            ctx.response.writeHead(200, { 'Content-Type': 'application/json' });
+            ctx.response.end(JSON.stringify(ctx.result));
+        }
+    }
+
+    deleteFiles(ctx: ServiceContext) {
+        try {
+            ctx.Log("Total [" + ctx.requestBody.files.length + "] need to be deleted.");
+            for (const file of ctx.requestBody.files) {
+                let fileRelativePath = this.getRelativePath(file)
+                let workspace = this.getWorkSpaceByVirtualPath(file, ctx);
+                let realpath = path.join(workspace.path, fileRelativePath);
+                ctx.Log("  -start to delete File: " + realpath);
+
+                if (!fs.existsSync(realpath)) {
+                    ctx.Warn("  file not exist.")
+                    continue;
+                }
+
+                trash(realpath);
+                ctx.Log("  - End delete file, Successed.")
+            }
+            ctx.result.success = true;
+
+        } catch (error) {
+            ctx.Error(error.message);
             ctx.result.success = false;
         }
         finally {
