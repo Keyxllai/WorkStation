@@ -1,8 +1,8 @@
-import { WorkStationService } from "./../service/WorkStationService";
-import { IHttpHandler } from "./../http/BaseRouter";
-import { FileSystemConfig } from "./../base/Config";
-import { ServiceContext } from "./../base/ServiceContext.";
-import { WorkSpace, WorkSpaceFolder, WorkSpaceFile } from "./../base/Models";
+import { WorkStationService } from "../service/WorkStationService";
+import { IHttpHandler } from "../http/BaseRouter";
+import { FileSystemConfig } from "../base/Config";
+import { ServiceContext } from "../base/ServiceContext";
+import { WorkSpace, WorkSpaceFolder, WorkSpaceFile } from "../base/Models";
 import * as fs from "fs";
 import * as path from "path";
 import trash from "trash";

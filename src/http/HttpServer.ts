@@ -13,6 +13,7 @@ import { StaticSource } from "./StaticSource";
 export class HttpServer extends WorkStationService {
 
     options: any;
+    port: number;
 
     app: express.Application;
     server!: http.Server;
@@ -22,6 +23,7 @@ export class HttpServer extends WorkStationService {
     constructor(options: any) {
         super();
         this.options = options;
+        this.port = options['port'];
         this.app = express();
         this.routers = {};
 
@@ -57,7 +59,7 @@ export class HttpServer extends WorkStationService {
     start(){
         this.configRouters();
         let app = this.app;
-        let port = 8083;  //TODO
+        let port = this.port;  //TODO
         app.set('port', port)
         this.server = app.listen(port, function(){
             console.log("Express server listening on port " + app.get('port'));
@@ -67,7 +69,7 @@ export class HttpServer extends WorkStationService {
 
     restart(){
         let app = this.app;
-        let port = 8083;  //TODO
+        let port = this.port;  //TODO
         this.server.close();
         app.set('port', port)
         this.server = app.listen(port, function(){

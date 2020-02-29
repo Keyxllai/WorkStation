@@ -1,5 +1,6 @@
 import { WorkStationServiceManager } from "./../service/WorkStationServiceManager";
 import { IService } from "./../Base/IService";
+import { AddinBuilder } from "./../base/addin/AddinBuilder";
 
 export class WorkStation {
     serviceManager!: WorkStationServiceManager;
@@ -19,7 +20,13 @@ export class WorkStation {
         this.serviceManager = new WorkStationServiceManager(this);
         this.serviceManager.registerServices();
 
+        let plugins = this.serviceManager.pluginService.getAddins();
+        this.serviceManager.addinBuilder.setupPlugins(plugins);
+        this.serviceManager.LoadService();
+
         this.serviceManager.injectWorkStation();
+
+
     }
 
     start() {
