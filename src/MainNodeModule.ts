@@ -1,6 +1,5 @@
 export * from './base/addin/Addin'
 export * from './base/addin/AddinBuilder'
-export * from './base/addin/AddinTree'
 export * from './base/addin/ObjectBuilder'
 
 export * from './base/Config'
