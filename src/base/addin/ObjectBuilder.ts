@@ -18,6 +18,7 @@ export class ObjectBuilder {
 
             if (object) {
                 object['id'] = objectOps['id'];
+                object['addin'] = addin;
                 return object;
             }
             else {
