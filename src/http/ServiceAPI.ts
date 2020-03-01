@@ -2,8 +2,8 @@ import { BaseRouter, IHttpHandler } from "./BaseRouter";
 
 export class ServiceAPI extends BaseRouter {
 
-    constructor() {
-        super({ url: '/api' });
+    constructor(options: any) {
+        super(options);
     }
 
     createRouter() {

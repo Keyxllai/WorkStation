@@ -11,7 +11,7 @@ import { ConfigAPI } from "./../config/ConfigAPI";
 import { StaticSource } from "./StaticSource";
 
 export class HttpServer extends WorkStationService {
-
+    routerKey: string = "workstation/routers";
     options: any;
     port: number;
 
@@ -39,52 +39,49 @@ export class HttpServer extends WorkStationService {
             extended: true
         }));
         app.use(bodyParser.json());
-        app.use(bodyParser.urlencoded({extended:false}));
+        app.use(bodyParser.urlencoded({ extended: false }));
         app.use(logger("combined"));
         app.use(cors());
-
-        // TODO
-        var serviceRouter = new ServiceAPI();
-        this.routers['serviceApiRouter'] = serviceRouter;
-
-        var configApiRouter = new ConfigAPI();
-        this.routers['configApiRouter'] = configApiRouter;
-
-        // TODO need dynamic create static folder base on configurations.
-        var httpFolderRouter = new StaticSource('/http','./');
-        this.routers['httpFolderRouter'] = httpFolderRouter;
-        
     }
 
-    start(){
+    start() {
         this.configRouters();
         let app = this.app;
         let port = this.port;  //TODO
         app.set('port', port)
-        this.server = app.listen(port, function(){
+        this.server = app.listen(port, function () {
             console.log("Express server listening on port " + app.get('port'));
         });
 
     }
 
-    restart(){
+    restart() {
         let app = this.app;
         let port = this.port;  //TODO
         this.server.close();
         app.set('port', port)
-        this.server = app.listen(port, function(){
+        this.server = app.listen(port, function () {
             console.log("Express server listening on port " + app.get('port'));
         });
     }
 
-    private configRouters(){
-        for (const key in this.routers) {
-            if (this.routers.hasOwnProperty(key)) {
-                const router = this.routers[key];
-                if(!router){
+    private configRouters() {
+        let that = this;
+        let routers = that.workStation.serviceManager.addinBuilder.buildObjects(that.routerKey);
+
+        routers.forEach(function (router: any) {
+            if (router.id) {
+                that.routers[router.id] = router;
+            }
+        });
+
+        for (const key in that.routers) {
+            if (that.routers.hasOwnProperty(key)) {
+                const router = that.routers[key];
+                if (!router) {
                     continue;
                 }
-                router.httpServer = this;
+                router.httpServer = that;
                 router.createRouter();
             }
         }

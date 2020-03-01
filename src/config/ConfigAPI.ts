@@ -2,8 +2,10 @@ import { BaseRouter } from "./../http/BaseRouter";
 import { Config } from "./../base/Config";
 
 export class ConfigAPI extends BaseRouter {
-    constructor() {
-        super({ url: "/api/config" });
+    path: string;
+    constructor(options: any) {
+        super(options);
+        this.path = options['path'];
     }
 
     createRouter() {

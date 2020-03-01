@@ -19,14 +19,27 @@ let workstation = {
             ]
         },
         {
-            key: "workstation/services/routers",
+            key: "workstation/routers",
             items: [
                 {
-                    id: "index",
+                    id: "ws-api",
+                    object: "WS.ServiceAPI",
+                    url: "/api",
+                    path: "./"
+                },
+                {
+                    id: "http-folder",
                     object: "WS.StaticSource",
-                    url: "/index",
-                    path: "./../"
+                    url: "/http",
+                    path: "./"
+                },
+                {
+                    id: "config-api",
+                    object: "WS.ConfigAPI",
+                    url: "/api/config",
+                    path: "./"
                 }
+                
             ]
         }
     ]
