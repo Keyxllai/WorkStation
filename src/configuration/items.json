@@ -1,0 +1,68 @@
+{
+    "items": [
+        {
+            "sku": "P-003-001",
+            "brand": "Intel",
+            "name": "Core i5 8th Gen",
+            "price": 1399.99,
+            "inventory": [
+                {
+                    "warehouse": "WHCD",
+                    "count": 120
+                },
+                {
+                    "warehouse": "WHBJ",
+                    "count": 100
+                }
+            ]
+        },
+        {
+            "sku": "P-003-002",
+            "brand": "Western Digital",
+            "name": "Western Digital WD BLACK SN750 NVMe M.2 2280 500GB",
+            "price": 99.99,
+            "inventory": [
+                {
+                    "warehouse": "WHCD",
+                    "count": 1000
+                },
+                {
+                    "warehouse": "WHBJ",
+                    "count": 600
+                }
+            ]
+        },
+        {
+            "sku": "P-003-003",
+            "brand": "Soundcore",
+            "name": "Soundcore Life 2 Active Noise Cancelling Over-Ear Wireless Headphones",
+            "price": 199.99,
+            "inventory": [
+                {
+                    "warehouse": "WHCD",
+                    "count": 800
+                },
+                {
+                    "warehouse": "WHBJ",
+                    "count": 100
+                }
+            ]
+        },
+        {
+            "sku": "P-003-004",
+            "brand": "Bluedio",
+            "name": "Over Ear Bluetooth Headphones",
+            "price": 50.00,
+            "inventory": [
+                {
+                    "warehouse": "WHCD",
+                    "count": 10
+                },
+                {
+                    "warehouse": "WHBJ",
+                    "count": 40
+                }
+            ]
+        }
+    ]
+}

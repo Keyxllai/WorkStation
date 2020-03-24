@@ -15,6 +15,8 @@ export * from './config/ConfigService'
 
 export * from './file/FileService'
 
+export * from './item/ItemAPI'
+
 export * from './http/BaseRouter'
 export * from './http/HttpServer'
 export * from './http/ServiceAPI'
