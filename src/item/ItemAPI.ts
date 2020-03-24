@@ -1,5 +1,6 @@
 import { BaseRouter } from "./../http/BaseRouter";
 import { ItemBusiness } from "./ItemBusiness";
+import { ServiceContext } from "../base/ServiceContext";
 
 export class ItemAPI extends BaseRouter {
     path: string;
@@ -17,16 +18,18 @@ export class ItemAPI extends BaseRouter {
             return;
         var app = this.httpServer.app;
         let ib = this.itemBusiness;
-        app.post(this.url + "/retrieve", function (req, rsp) {
-            var data: any = ["Item"];
+        let itemretrieveurl = this.url;
+        app.get(itemretrieveurl, function (req, rsp) {
+            let ctx = new ServiceContext(itemretrieveurl, req, rsp);
             try {
-                data = ib.populateItems();
+                ib.populateItems(ctx);
             } catch (error) {
-
+                // send MQ to handle Error
             }
-            if (!data)
-                data = [];
-            rsp.send(data);
+            finally {
+                ctx.response.writeHead(200, { 'Content-Type': 'application/json' });
+                ctx.response.end(JSON.stringify(ctx.result));
+            }
         });
     }
 }
