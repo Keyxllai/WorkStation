@@ -32,11 +32,13 @@
     "typescript": "^3.7.5"
   },
   "dependencies": {
+    "@types/ioredis": "^4.14.9",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-ws": "^4.0.0",
     "formidable": "^1.2.2",
+    "ioredis": "^4.16.0",
     "morgan": "^1.9.1",
     "trash": "^6.1.1"
   }
