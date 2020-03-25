@@ -1,10 +1,11 @@
 import * as path from 'path';
 import * as fs from 'fs';
 import { ServiceContext } from "../base/ServiceContext";
+import { Item } from './entity/Item';
 
 
 export class ItemBusiness{
-    items: { [key: string]: any };
+    items: Item[];
 
     constructor(options: any){
 
@@ -21,11 +22,12 @@ export class ItemBusiness{
 
             if (fs.existsSync(itemfilepath)) {
                 let json = fs.readFileSync(itemfilepath).toString();
-                this.items = JSON.parse(json);
+                let itemsjson = JSON.parse(json);
 
-                ctx.Log("Total ["+ this.items.items.length + "] items.")
+                this.items = itemsjson.items;
+                ctx.Log("Total ["+ itemsjson.items.length + "] items.")
 
-                ctx.result.result = this.items.items;
+                ctx.result.result = itemsjson.items;
                 ctx.result.success = true;
             }
             else {
