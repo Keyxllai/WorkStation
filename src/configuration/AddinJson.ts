@@ -38,12 +38,6 @@ let workstation = {
                     object: "WS.ConfigAPI",
                     url: "/api/config",
                     path: "./"
-                },
-                {
-                    id: "item-api",
-                    object: "WS.ItemAPI",
-                    url: "/api/item",
-                    path: "./"
                 }
                 
             ]
@@ -88,6 +82,6 @@ let itemService ={
 let addins = [];
 addins.push(workstation);
 addins.push(fileService);
-//addins.push(itemService);
+addins.push(itemService);
 
 module.exports = addins;
