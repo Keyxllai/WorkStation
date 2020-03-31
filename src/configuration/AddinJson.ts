@@ -61,6 +61,7 @@ let fileService = {
     ]
 }
 
+// Test portion with Redis
 let itemService ={
     name: "itemservice",
     dirname: __dirname,

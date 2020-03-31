@@ -13,6 +13,12 @@ export class ItemBusiness {
         this.redis = new Redis();
     }
 
+    /**
+     * Get Item List from config file
+     *
+     * @param {ServiceContext} ctx
+     * @memberof ItemBusiness
+     */
     populateItems(ctx: ServiceContext) {
         try {
             let items = this.getMetaItems(ctx);
@@ -25,6 +31,13 @@ export class ItemBusiness {
         }
     }
 
+    /**
+     * Get single Item Details from Redis
+     *
+     * @param {ServiceContext} ctx
+     * @returns
+     * @memberof ItemBusiness
+     */
     async getItemDetail(ctx: ServiceContext) {
         try {
             let that = this;
@@ -47,6 +60,12 @@ export class ItemBusiness {
         }
     }
 
+    /**
+     *  populate items into Redis without TTL.
+     *
+     * @param {ServiceContext} ctx
+     * @memberof ItemBusiness
+     */
     stockItems(ctx: ServiceContext) {
         try {
             let that = this;
