@@ -1,12 +1,12 @@
 ## 1. Get workspaces
-![postman](http://q6d7m6xms.bkt.clouddn.com/getws.png)
+![postman](http://innomind-zj.smartbx.top/getws.png)
 
 ## 2. Get Files
-![postman](http://q6d7m6xms.bkt.clouddn.com/getfiles.png)
+![postman](http://innomind-zj.smartbx.top/getfiles.png)
 
 ## 3. Delete Files
-![postman](http://q6d7m6xms.bkt.clouddn.com/deletefiles.png)
+![postman](http://innomind-zj.smartbx.top/deletefiles.png)
 
 ## 4. Rename Folder
-![postman](http://q6d7m6xms.bkt.clouddn.com/rename.png)
+![postman](http://innomind-zj.smartbx.top/rename.png)
 

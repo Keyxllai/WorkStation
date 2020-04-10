@@ -29,4 +29,4 @@ let monitor = function () {
 
 setInterval(function(){
     monitor();
-},10000);
+},100000);

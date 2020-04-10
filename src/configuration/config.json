@@ -1,4 +1,19 @@
 {
+    "WeChatConfig":{
+        "id": "WeChatConfig",
+        "name": "WeChat",
+        "setting":{
+            "auth":"Keyxllai",
+            "email":"jxlxl2010@126.com",
+            "wechat":"LaiShaun",
+            "company": "moxin",
+            "wechatdev":{
+                "id":"qizai",
+                "appid":"wxfd252df9c7469558 //请配置正确的公众号id. exchange",   
+                "appsecret":"4930abb084bc6ce751ddaf311ad360f1 //请配置正确的公众号secret. exchange" 
+            }
+        }
+    },
     "FileSystemConfig": {
         "id": "FileSystemConfig",
         "name": "FileSystem",

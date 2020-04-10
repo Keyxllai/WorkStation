@@ -5,12 +5,12 @@ export interface IHttpHandler {
     handleHttp(url: string, req: any, res: any): void;
 }
 
-export class BaseRouter{
+export class BaseRouter {
 
     httpServer!: HttpServer;
     url!: string;
 
-    constructor(options:any){
+    constructor(options: any) {
         if (options) {
             this.url = options['url'];
         }
@@ -20,7 +20,11 @@ export class BaseRouter{
      * createRouter
      */
     public createRouter() {
-        
+
+    }
+
+    public init() {
+
     }
 
 }

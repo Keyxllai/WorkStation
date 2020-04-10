@@ -40,6 +40,7 @@
     "formidable": "^1.2.2",
     "ioredis": "^4.16.0",
     "morgan": "^1.9.1",
+    "superagent": "^5.2.2",
     "trash": "^6.1.1"
   }
 }

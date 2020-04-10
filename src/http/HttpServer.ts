@@ -83,6 +83,9 @@ export class HttpServer extends WorkStationService {
                 }
                 router.httpServer = that;
                 router.createRouter();
+                if (router.init) {
+                    router.init();
+                }
             }
         }
     }

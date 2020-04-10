@@ -80,9 +80,28 @@ let itemService ={
     ]
 }
 
+let wechatService ={
+    name: "wechatservice",
+    dirname: __dirname,
+    extensions: [
+        {
+            key: "workstation/routers",
+            items: [
+                {
+                    id: "wechat-api",
+                    object: "WS.WeChat",
+                    url: "/api/wechat",
+                    path: "./"
+                }
+            ]
+        }
+    ]
+}
+
 let addins = [];
 addins.push(workstation);
 addins.push(fileService);
 addins.push(itemService);
+addins.push(wechatService);
 
 module.exports = addins;
