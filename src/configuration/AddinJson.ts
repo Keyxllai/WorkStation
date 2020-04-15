@@ -89,7 +89,7 @@ let wechatService ={
             items: [
                 {
                     id: "wechat-api",
-                    object: "WS.WeChat",
+                    object: "WS.WeChatRouter",
                     url: "/api/wechat",
                     path: "./"
                 }
