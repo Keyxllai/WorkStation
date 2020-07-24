@@ -10,7 +10,7 @@ let workstation = {
                 {
                     id: "http-server",
                     object: "WS.HttpServer",
-                    port: 8089
+                    port: 8082
                 },
                 {
                     id: "mysqlwrapper",
