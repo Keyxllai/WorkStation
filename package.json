@@ -39,6 +39,7 @@
     "express-ws": "^4.0.0",
     "formidable": "^1.2.2",
     "ioredis": "^4.16.0",
+    "mongoose": "^5.9.16",
     "morgan": "^1.9.1",
     "superagent": "^5.2.2",
     "trash": "^6.1.1"

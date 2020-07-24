@@ -10,7 +10,7 @@ let workstation = {
                 {
                     id: "http-server",
                     object: "WS.HttpServer",
-                    port: 8083
+                    port: 8089
                 },
                 {
                     id: "mysqlwrapper",
@@ -73,6 +73,12 @@ let itemService ={
                     id: "item-api",
                     object: "WS.ItemAPI",
                     url: "/api/item",
+                    path: "./"
+                },
+                {
+                    id: "navigation-api",
+                    object: "WS.NavigationAPI",
+                    url: "/api/navigation",
                     path: "./"
                 }
             ]

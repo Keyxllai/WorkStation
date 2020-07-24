@@ -16,6 +16,7 @@ export * from './config/ConfigService'
 export * from './file/FileService'
 
 export * from './item/ItemAPI'
+export * from './navigation/NavigationAPI'
 export * from './core/wx/WeChatRouter'
 
 export * from './http/BaseRouter'
