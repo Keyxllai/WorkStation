@@ -7,6 +7,7 @@ export class NavigationBusiness {
 
     constructor(options: any) {
         this.rawNodes = [];
+        this.dbNodes = [];
         this.initRawNodes();
         this.initDbNodes();
     }
@@ -24,12 +25,12 @@ export class NavigationBusiness {
     }
 
     initDbNodes() {
-        this.dbNodes.push(new NavigationNode({ id: '1', pid: null, name: '男子' }));
+        this.dbNodes.push(new NavigationNode({ id: '1', name: '男子' }));
         this.dbNodes.push(new NavigationNode({ id: '1-1', pid: '1', name: '上装' }));
         this.dbNodes.push(new NavigationNode({ id: '1-2', pid: '1', name: '下装' }));
         this.dbNodes.push(new NavigationNode({ id: '1-3', pid: '1', name: '鞋' }));
         this.dbNodes.push(new NavigationNode({ id: '1-4', pid: '1', name: '配件' }));
-        this.dbNodes.push(new NavigationNode({ id: '2', pid: null, name: '女子' }));
+        this.dbNodes.push(new NavigationNode({ id: '2', name: '女子' }));
         this.dbNodes.push(new NavigationNode({ id: '2-1', pid: '2', name: '上装' }));
         this.dbNodes.push(new NavigationNode({ id: '2-2', pid: '2', name: '下装' }));
         this.dbNodes.push(new NavigationNode({ id: '2-3', pid: '2', name: '鞋' }));

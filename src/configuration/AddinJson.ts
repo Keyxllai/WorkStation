@@ -74,13 +74,7 @@ let itemService ={
                     object: "WS.ItemAPI",
                     url: "/api/item",
                     path: "./"
-                },
-                {
-                    id: "navigation-api",
-                    object: "WS.NavigationAPI",
-                    url: "/api/navigation",
-                    path: "./"
-                }
+                }                
             ]
         }
     ]
@@ -104,10 +98,29 @@ let wechatService ={
     ]
 }
 
+let navigatinService ={
+    name: "navigationservice",
+    dirname: __dirname,
+    extensions: [
+        {
+            key: "workstation/routers",
+            items: [
+                {
+                    id: "navigation-api",
+                    object: "WS.NavigationAPI",
+                    url: "/api/navigation",
+                    path: "./"
+                }
+            ]
+        }
+    ]
+}
+
 let addins = [];
 addins.push(workstation);
 addins.push(fileService);
 addins.push(itemService);
 addins.push(wechatService);
+addins.push(navigatinService);
 
 module.exports = addins;

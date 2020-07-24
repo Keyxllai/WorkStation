@@ -1,10 +1,10 @@
-export class NavigationNode{
+export class NavigationNode {
     id: string;
     pid: string;
     name: string;
     navigations: NavigationNode[];
 
-    constructor(ops: any){
+    constructor(ops: any) {
         this.id = ops.id;
         this.pid = ops.pid;
         this.name = ops.name;
