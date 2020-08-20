@@ -11,6 +11,9 @@ var workstation = new WorkStation();
 
 workstation.start();
 
+let port = process.env.PORT;
+console.log(`PORT: `+ port);
+
 let monitor = function () {
     const memoryUsage = process.memoryUsage();
     const cpuUsage = process.cpuUsage();
@@ -27,6 +30,6 @@ let monitor = function () {
     }));
 }
 
-// setInterval(function(){
-//     monitor();
-// },100000);
+setInterval(function(){
+    monitor();
+},100000);

@@ -4,7 +4,7 @@
   "description": "Workstation for Lai",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/NodeStart"
+    "start": "set PORT=3333 && node dist/NodeStart"
   },
   "repository": {
     "type": "git",
