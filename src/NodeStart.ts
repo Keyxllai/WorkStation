@@ -2,6 +2,7 @@ import * as mainModule from './MainNodeModule'
 
 import * as core from "./base/addin/Addin"
 import * as util from "./base/Util"
+import * as logger from "./base/Logger"
 
 core.publicApi('WS', mainModule);
 
@@ -12,7 +13,8 @@ var workstation = new WorkStation();
 workstation.start();
 
 let port = process.env.PORT;
-console.log(`PORT: `+ port);
+logger.logger.error('test 12 log');
+
 
 let monitor = function () {
     const memoryUsage = process.memoryUsage();

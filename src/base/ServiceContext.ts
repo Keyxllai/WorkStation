@@ -1,4 +1,5 @@
 import { GeneralResponse } from "./GeneralResponse";
+import * as logger from "./Logger"
 
 
 export class ServiceContext {
@@ -26,18 +27,22 @@ export class ServiceContext {
 
     Log(msg: any) {
         this.LogResponse('INFO', msg);
+        logger.logger.info(msg)
     }
 
     Error(msg: any) {
         this.LogResponse('ERRO', msg);
+        logger.logger.error(msg);
     }
 
     Warn(msg: any) {
         this.LogResponse('WARN', msg);
+        logger.logger.info(msg)
     }
 
     Debug(msg: any) {
         this.LogResponse('DBUG', msg);
+        logger.logger.info(msg)
     }
 
     protected LogResponse(type: string, message: string) {
